@@ -1,0 +1,29 @@
+name: CI
+on:
+  push:
+    branches: [ "main" ]
+  pull_request:
+    branches: [ "main" ]
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - name: Set up Python 3.8
+        uses: actions/setup-python@v1
+        with:
+          python-verson: 3.8
+      - name: install dependencies
+        run: |
+          make install
+      - name: Lint with Pylint
+        run: |
+          make lint
+      - name: test with pytest
+        run: |
+          make test
+      - name: format code 
+        run: |
+          make format
